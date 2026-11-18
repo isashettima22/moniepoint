@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Confirm Transfer</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <h1>Moniepoint</h1>
+
+        <h2>Confirm Transfer</h2>
+
+        <p>Please review the transfer details below.</p>
+
+        <hr>
+
+        <p>Recipient Name</p>
+        <h3>{{ details.recipient_name }}</h3>
+
+        <p>Bank</p>
+        <h3>{{ details.bank_name }}</h3>
+
+        <p>Account Number</p>
+        <h3>{{ details.account_number }}</h3>
+
+        <p>Transfer Amount</p>
+        <h2>₦{{ details.amount }}</h2>
+
+        <form method="POST" action="{% url 'confirm_transfer' %}">
+
+            {% csrf_token %}
+
+            <button type="submit">
+                Confirm Transfer
+            </button>
+
+        </form>
+
+        <p>
+            <a href="{% url 'transfer' %}">
+                Cancel Transfer
+            </a>
+        </p>
+
+    </div>
+
+</body>
+
+</html>

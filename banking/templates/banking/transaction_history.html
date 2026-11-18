@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction History</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <h1>Moniepoint</h1>
+
+        <h2>Transaction History</h2>
+
+        <p>View your previous simulated transfers.</p>
+
+        <hr>
+
+        {% for transaction in transactions %}
+
+<div class="history-item">
+
+    <h3>{{ transaction.transaction_type }}</h3>
+
+    <p>{{ transaction.recipient_name }}</p>
+
+    <p>{{ transaction.bank_name }}</p>
+
+    <p>₦{{ transaction.amount|floatformat:2 }}</p>
+
+    <p>{{ transaction.status }}</p>
+
+    <small>
+        {{ transaction.created_at|date:"d M Y, h:i A" }}
+    </small>
+
+    <hr>
+
+</div>
+
+{% empty %}
+
+<p>You have no transactions yet.</p>
+
+{% endfor %}
+        <a href="{% url 'dashboard' %}">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+
+</html>

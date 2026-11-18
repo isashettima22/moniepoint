@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Review Data Purchase | Moniepoint</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+</head>
+
+<body>
+
+    <div class="airtime-card">
+
+        <h2>Review Data Purchase</h2>
+
+        <p><strong>Network:</strong> {{ details.network }}</p>
+
+        <p><strong>Phone Number:</strong> {{ details.phone_number }}</p>
+
+        <p><strong>Data Plan:</strong> {{ details.data_plan }}</p>
+
+        <p><strong>Amount:</strong> ₦{{ details.amount }}</p>
+
+        <p>Please confirm that these details are correct.</p>
+
+        <form method="POST" action="{% url 'confirm_data' %}">
+            {% csrf_token %}
+
+            <button type="submit">Confirm Purchase</button>
+        </form>
+
+        <br>
+
+        <a href="{% url 'data_bundle' %}">Cancel Purchase</a>
+
+    </div>
+
+</body>
+</html>

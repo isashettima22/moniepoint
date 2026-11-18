@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review TV Subscription | Moniepoint</title>
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+</head>
+<body>
+
+    <div class="airtime-card">
+        <h2>Review TV Subscription</h2>
+
+        <p><strong>Provider:</strong> {{ details.provider }}</p>
+        <p><strong>Smartcard/IUC Number:</strong> {{ details.smartcard_number }}</p>
+        <p><strong>Package:</strong> {{ details.package }}</p>
+        <p><strong>Amount:</strong> ₦{{ details.amount }}</p>
+
+        <p>Please confirm that these details are correct.</p>
+
+        <form method="POST" action="{% url 'confirm_tv' %}">
+            {% csrf_token %}
+            <button type="submit">Confirm Subscription</button>
+        </form>
+
+        <br>
+        <a href="{% url 'tv_subscription' %}">Cancel Subscription</a>
+    </div>
+
+</body>
+</html>

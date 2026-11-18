@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Confirm Airtime Purchase</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <h1>Moniepoint</h1>
+
+        <h2>Confirm Airtime Purchase</h2>
+
+        <p>Please review your details.</p>
+
+        <hr>
+
+        <p>Mobile Network</p>
+        <h3>{{ details.network }}</h3>
+
+        <p>Phone Number</p>
+        <h3>{{ details.phone_number }}</h3>
+
+        <p>Airtime Amount</p>
+        <h2>₦{{ details.amount }}</h2>
+
+        <form method="POST" action="{% url 'confirm_airtime' %}">
+
+            {% csrf_token %}
+
+            <button type="submit">
+                Confirm Purchase
+            </button>
+
+        </form>
+
+        <p>
+            <a href="{% url 'airtime' %}">
+                Cancel Purchase
+            </a>
+        </p>
+
+    </div>
+
+</body>
+
+</html>

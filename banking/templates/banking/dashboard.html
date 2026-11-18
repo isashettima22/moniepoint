@@ -1,0 +1,279 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Moniepoint | Dashboard</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="welcome-section">
+            <p class="welcome-text">Welcome back 👋</p>
+            <h2>Hello, {{ username }}</h2>
+            <small>Here's your financial overview.</small>
+        </div>
+
+        <div class="header-right">
+
+            <div class="profile">
+                {{ username|first|upper }}
+            </div>
+
+            <form class="logout-form" method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+
+        </div>
+
+    </header>
+
+
+    <!-- SUCCESS MESSAGES -->
+
+    {% if messages %}
+        {% for message in messages %}
+
+            <div class="success-message">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+    <!-- BALANCE CARD -->
+
+    <section class="balance-card">
+
+        <div class="balance-top">
+            <div>
+    <p>Available Wallet Balance</p>
+
+    <div class="balance-display">
+        <h1 id="walletBalance">₦{{ balance|floatformat:2 }}</h1>
+
+        <button type="button"
+                id="toggleBalance"
+                class="balance-toggle"
+                onclick="toggleWalletBalance()"
+                aria-label="Hide balance">
+            👁
+        </button>
+    </div>
+</div>
+
+            <div class="wallet-icon">
+                ₦
+            </div>
+        </div>
+
+        <div class="account-details">
+
+            <div>
+                <small>Account Number</small>
+                <h4>{{ account_number }}</h4>
+            </div>
+
+            <div class="demo-label">
+                Demo Account
+            </div>
+
+        </div>
+
+        <a class="details-btn" href="{% url 'profile' %}">
+            View Account Details →
+        </a>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="quick-actions">
+
+        <div class="section-heading">
+            <div>
+                <h3>Quick Actions</h3>
+                <p>Choose a service to continue</p>
+            </div>
+        </div>
+
+        <div class="action-grid">
+
+            <a href="{% url 'transfer' %}" class="action">
+                <span>↗</span>
+                <p>Transfer</p>
+            </a>
+
+            <a href="{% url 'airtime' %}" class="action">
+                <span>📱</span>
+                <p>Airtime</p>
+            </a>
+
+            <a href="{% url 'data_bundle' %}" class="action">
+                <span>🌐</span>
+                <p>Buy Data</p>
+            </a>
+
+            <a href="{% url 'electricity' %}" class="action">
+                <span>💡</span>
+                <p>Electricity</p>
+            </a>
+
+            <a href="{% url 'tv_subscription' %}" class="action">
+                <span>📺</span>
+                <p>TV Subscription</p>
+            </a>
+
+            <a href="{% url 'water_bill' %}" class="action">
+                <span>💧</span>
+                <p>Water Bill</p>
+            </a>
+
+            <a href="{% url 'transaction_history' %}" class="action">
+                <span>📋</span>
+                <p>History</p>
+            </a>
+
+            <a href="{% url 'profile' %}" class="action">
+                <span>👤</span>
+                <p>My Profile</p>
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- RECENT TRANSACTIONS -->
+
+    <section class="transactions">
+
+        <div class="transaction-heading">
+
+            <div>
+                <h3>Recent Transactions</h3>
+                <p>Your latest wallet activities</p>
+            </div>
+
+            <a href="{% url 'transaction_history' %}">
+                See All →
+            </a>
+
+        </div>
+
+
+        <div class="transaction-list">
+
+            {% for transaction in transactions %}
+
+                <div class="transaction">
+
+                    <div class="transaction-icon">
+                        ↗
+                    </div>
+
+                    <div class="transaction-info">
+
+                        <h4>{{ transaction.recipient_name }}</h4>
+
+                        <p>{{ transaction.transaction_type }}</p>
+
+                        <small>
+                            {{ transaction.created_at|date:"d M Y, h:i A" }}
+                        </small>
+
+                    </div>
+
+                    <div class="transaction-amount">
+
+                        <h4>₦{{ transaction.amount|floatformat:2 }}</h4>
+
+                        <small>{{ transaction.status }}</small>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty-transactions">
+                    <span>📂</span>
+                    <h4>No transactions yet</h4>
+                    <p>Your recent activities will appear here.</p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+        <a href="{% url 'dashboard' %}" class="active">
+            <span>⌂</span>
+            Home
+        </a>
+
+        <a href="{% url 'transfer' %}">
+            <span>↗</span>
+            Transfer
+        </a>
+
+        <a href="{% url 'transaction_history' %}">
+            <span>▤</span>
+            History
+        </a>
+
+        <a href="{% url 'profile' %}">
+            <span>◉</span>
+            Profile
+        </a>
+
+    </nav>
+
+</div>
+<script>
+    let balanceVisible = true;
+
+    const actualBalance = "₦{{ balance|floatformat:2 }}";
+
+    function toggleWalletBalance() {
+
+        const balance = document.getElementById("walletBalance");
+        const button = document.getElementById("toggleBalance");
+
+        if (balanceVisible) {
+            balance.textContent = "₦ ••••••••";
+            button.textContent = "🙈";
+            button.setAttribute("aria-label", "Show balance");
+            balanceVisible = false;
+        } else {
+            balance.textContent = actualBalance;
+            button.textContent = "👁";
+            button.setAttribute("aria-label", "Hide balance");
+            balanceVisible = true;
+        }
+    }
+</script>
+</body>
+</html>

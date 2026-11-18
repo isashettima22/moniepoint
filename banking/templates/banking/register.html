@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <h1>Moniepoint</h1>
+
+        <h2>Create Your Account</h2>
+
+        <p>Register to access your banking dashboard.</p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">Create Account</button>
+
+        </form>
+
+        <p>
+            Already have an account?
+            <a href="{% url 'login' %}">Login here</a>
+        </p>
+
+    </div>
+
+</body>
+</html>

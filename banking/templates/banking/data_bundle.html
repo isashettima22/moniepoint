@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Data | Moniepoint</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+</head>
+
+<body>
+
+    <div class="airtime-card">
+
+        <h2>Buy Data Bundle</h2>
+
+        <p>Available Wallet Balance:</p>
+        <h3>₦{{ balance|floatformat:2 }}</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">Review Purchase</button>
+        </form>
+
+        <br>
+
+        <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction Receipt | Moniepoint</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+
+</head>
+
+<body>
+
+<div class="receipt-container">
+
+    <div class="receipt-card">
+
+        <!-- SUCCESS ICON -->
+
+        <div class="receipt-success-icon">
+            ✓
+        </div>
+
+        <h2>Transaction Successful!</h2>
+
+        <p class="receipt-subtitle">
+            Your transaction has been completed successfully.
+        </p>
+
+        <!-- AMOUNT -->
+
+        <div class="receipt-amount">
+
+            <small>Amount Transferred</small>
+
+            <h1>₦{{ receipt.amount|floatformat:2 }}</h1>
+
+        </div>
+
+        <div class="receipt-status">
+            <span>●</span> SUCCESSFUL
+        </div>
+
+        <hr>
+
+        <!-- TRANSACTION DETAILS -->
+
+        <div class="receipt-details">
+
+            <div class="receipt-row">
+                <span>Transaction Reference</span>
+                <strong>TRX-{{ receipt.id }}</strong>
+            </div>
+
+            <div class="receipt-row">
+                <span>Transaction Type</span>
+                <strong>{{ receipt.transaction_type }}</strong>
+            </div>
+
+            <div class="receipt-row">
+                <span>Recipient Name</span>
+                <strong>{{ receipt.recipient_name }}</strong>
+            </div>
+
+            <div class="receipt-row">
+                <span>Bank</span>
+                <strong>{{ receipt.bank_name }}</strong>
+            </div>
+
+            <div class="receipt-row">
+                <span>Account Number</span>
+                <strong>{{ receipt.account_number }}</strong>
+            </div>
+
+            <div class="receipt-row">
+                <span>Date</span>
+                <strong>{{ receipt.created_at|date:"d M Y" }}</strong>
+            </div>
+
+            <div class="receipt-row">
+                <span>Time</span>
+                <strong>{{ receipt.created_at|date:"h:i A" }}</strong>
+            </div>
+
+            <div class="receipt-row">
+                <span>Status</span>
+                <strong class="successful-text">
+                    {{ receipt.status }}
+                </strong>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <p class="receipt-footer">
+            Thank you for using our banking application.
+        </p>
+
+        <!-- BUTTONS -->
+
+        <button onclick="window.print()" class="print-receipt">
+            Print Receipt
+        </button>
+
+        <a href="{% url 'dashboard' %}" class="receipt-home">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

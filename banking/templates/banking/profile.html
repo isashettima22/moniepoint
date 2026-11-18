@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | Moniepoint</title>
+
+    <link rel="stylesheet" href="{% static 'banking/style.css' %}">
+</head>
+
+<body>
+
+    <div class="airtime-card">
+
+        <h2>My Account Profile</h2>
+
+        <h3>Personal Information</h3>
+
+        <p><strong>Username:</strong> {{ user.username }}</p>
+
+        <p><strong>Email Address:</strong> {{ user.email|default:"Not provided" }}</p>
+
+        <h3>Wallet Information</h3>
+
+        <p><strong>Wallet Balance:</strong>
+            ₦{{ wallet.balance|floatformat:2 }}
+        </p>
+
+        <br>
+        <a class="profile-button" href="{% url 'update_profile' %}">
+            Edit Profile
+        </a>
+
+        <a href="{% url 'dashboard' %}">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+</html>
